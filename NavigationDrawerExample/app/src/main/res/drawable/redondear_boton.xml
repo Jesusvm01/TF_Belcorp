@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<shape xmlns:android="http://schemas.android.com/apk/res/android">
+    //modifica las puntas del boton y las redondea
+    <corners
+        android:radius="16dp"
+        />
+    //modifica el color del boton
+
+    //modificamos el contorno del boton
+    <stroke
+        android:width="2dp"
+        android:color="@color/colorPrimary"
+        />
+</shape>
