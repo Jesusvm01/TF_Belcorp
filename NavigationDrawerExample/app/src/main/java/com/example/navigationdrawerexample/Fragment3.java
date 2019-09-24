@@ -4,9 +4,14 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.Toast;
 
 
 /**
@@ -17,7 +22,7 @@ import android.view.ViewGroup;
  * Use the {@link Fragment3#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class Fragment3 extends Fragment {
+public class Fragment3 extends Fragment implements View.OnClickListener{
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
     private static final String ARG_PARAM1 = "param1";
@@ -64,7 +69,11 @@ public class Fragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_fragmento3, container, false);
+        //return inflater.inflate(R.layout.fragment_fragmento3, container, false);
+        View v =  inflater.inflate(R.layout.fragment_fragmento3, container, false);
+        Button b = (Button) v.findViewById(R.id.appCompatButtonRegister);
+        b.setOnClickListener(this);
+        return v;
     }
 
     // TODO: Rename method, update argument and hook method into UI event
@@ -104,5 +113,33 @@ public class Fragment3 extends Fragment {
     public interface OnFragmentInteractionListener {
         // TODO: Update argument type and name
         void onFragmentInteraction(Uri uri);
+    }
+
+    @Override
+    public void onClick(View view) {
+
+        EditText nombre = (EditText) getView().findViewById(R.id.nombre);
+        EditText direccion = (EditText) getView().findViewById(R.id.direccion);
+        EditText telefono = (EditText) getView().findViewById(R.id.telefono);
+        EditText latitud = (EditText) getView().findViewById(R.id.latitud);
+        EditText longitud = (EditText) getView().findViewById(R.id.longitud);
+
+        MedicionDAO dao = new MedicionDAO(getActivity().getBaseContext());
+        try {
+
+            dao.insertartienda(nombre.getText().toString(),
+                    direccion.getText().toString(),
+                    telefono.getText().toString(),
+                    latitud.getText().toString(),
+                    longitud.getText().toString());
+                    //Double.parseDouble(precio.getText().toString()));
+
+            Toast toast= Toast.makeText(getActivity().getApplicationContext(), "Se insertó correctamente", Toast.LENGTH_SHORT);
+            toast.setGravity(Gravity.CENTER|Gravity.CENTER_HORIZONTAL, 0, 0);
+            toast.show();
+
+        } catch (DAOException e) {
+            Log.i("GeneroMusicalNuevoActi", "====> " + e.getMessage());
+        }
     }
 }

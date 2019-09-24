@@ -14,6 +14,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener,
@@ -21,7 +22,9 @@ public class MainActivity extends AppCompatActivity
         Fragmento2.OnFragmentInteractionListener,
         Fragment3.OnFragmentInteractionListener,
         Fragmento4.OnFragmentInteractionListener,
-        Fragmento5.OnFragmentInteractionListener{
+        Fragmento5.OnFragmentInteractionListener,
+        RegistroVendedor.OnFragmentInteractionListener,
+        ListarVendedor.OnFragmentInteractionListener{
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +41,17 @@ public class MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        //rescuperando los datos que se han enviado
+        String usuario = getIntent().getStringExtra("usuario");
+
+        //se muestra que si esta viajando el dato del otro activity
+        Toast.makeText(getApplicationContext(), "hola" + usuario, Toast.LENGTH_SHORT).show();
+
+
+
+
+
     }
 
     @Override
@@ -107,6 +121,14 @@ public class MainActivity extends AppCompatActivity
             fragmentManager.beginTransaction().
                     replace(R.id.contenedor,
                             new Fragmento5()).commit();
+        } else if (id == R.id.nav_vendedor) {
+            fragmentManager.beginTransaction().
+                    replace(R.id.contenedor,
+                            new RegistroVendedor()).commit();
+        } else if (id == R.id.nav_listavendedor) {
+            fragmentManager.beginTransaction().
+                    replace(R.id.contenedor,
+                            new ListarVendedor()).commit();
         } else if (id == R.id.nav_send) {
 
         }

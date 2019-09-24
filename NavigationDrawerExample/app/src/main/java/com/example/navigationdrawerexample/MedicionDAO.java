@@ -19,14 +19,30 @@ public class MedicionDAO {
 
 
     public void insertar(String nombre, String marca, String categoria, String unidad, double precio) throws DAOException {
-        Log.i("MedicionDAO", "insertar()");
+        Log.i("BelcorpDAO", "insertar()");
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
         try {
             String[] args = new String[]{nombre+"", marca+"", categoria+"",unidad+"",  String.valueOf(precio)};
             db.execSQL("INSERT INTO producto(nombre, marca, categoria,unidad,precio ) VALUES(?,?,?,?,?)", args);
-            Log.i("MedicionDAO", "Se insertó");
+            Log.i("BelcorpDAO", "Se insertó");
         } catch (Exception e) {
-            throw new DAOException("MedicionDAO: Error al insertar: " + e.getMessage());
+            throw new DAOException("BelcorpDAO: Error al insertar: " + e.getMessage());
+        } finally {
+            if (db != null) {
+                db.close();
+            }
+        }
+    }
+
+    public void insertartienda(String nombre, String direccion, String telefono, String latitud, String longitud) throws DAOException {
+        Log.i("BelcorpDAO", "insertar()");
+        SQLiteDatabase db = _dbHelper.getWritableDatabase();
+        try {
+            String[] args = new String[]{nombre+"", direccion+"", telefono+"",latitud+"",longitud};
+            db.execSQL("INSERT INTO tienda(nombre, direccion, telefono,latitud,longitud ) VALUES(?,?,?,?,?)", args);
+            Log.i("BelcorpDAO", "Se insertó");
+        } catch (Exception e) {
+            throw new DAOException("BelcorpDAO: Error al insertar: " + e.getMessage());
         } finally {
             if (db != null) {
                 db.close();
@@ -35,7 +51,7 @@ public class MedicionDAO {
     }
 
     public void actualizar(int idHorno, double temperatura, int ocupabilidad, String descripcion) throws DAOException {
-        Log.i("MedicionDAO", "actualizar()");
+        Log.i("BelcorpDAO", "actualizar()");
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
         try {
             //String[] args = new String[]{temperatura+"", ocupabilidad+"",descripcion+"",idHorno+""};
@@ -48,9 +64,9 @@ public class MedicionDAO {
 
             db.update("producto",args,"idHorno = " + String.valueOf(idHorno),null);
 
-            Log.i("MedicionDAO", "Se actualizó");
+            Log.i("BelcorpDAO", "Se actualizó");
         } catch (Exception e) {
-            throw new DAOException("MedicionDAO: Error al actualizar: " + e.getMessage());
+            throw new DAOException("BelcorpDAO: Error al actualizar: " + e.getMessage());
         } finally {
             if (db != null) {
                 db.close();
@@ -59,7 +75,7 @@ public class MedicionDAO {
     }
 
     public ArrayList<Medicion> listar() throws DAOException {
-        Log.i("MedicionDAO", "listar()");
+        Log.i("BelcorpDAO", "listar()");
         SQLiteDatabase db = _dbHelper.getReadableDatabase();
         ArrayList<Medicion> lista = new ArrayList<Medicion>();
         try {
@@ -91,7 +107,7 @@ public class MedicionDAO {
             }
             c.close();
         } catch (Exception e) {
-            throw new DAOException("MedicionDAO: Error al obtener: " + e.getMessage());
+            throw new DAOException("BelcorpDAO: Error al obtener: " + e.getMessage());
         } finally {
             if (db != null) {
                 db.close();
@@ -102,7 +118,7 @@ public class MedicionDAO {
 
 
     public ArrayList<Medicion> buscar(String criterio1, String criterio2, String operador) throws DAOException {
-        Log.i("MedicionDAO", "buscar()");
+        Log.i("BelcorpDAO", "buscar()");
         SQLiteDatabase db = _dbHelper.getReadableDatabase();
         ArrayList<Medicion> lista = new ArrayList<Medicion>();
         try {
@@ -125,7 +141,7 @@ public class MedicionDAO {
             }
             c.close();
         } catch (Exception e) {
-            throw new DAOException("MedicionDAO: Error al obtener: " + e.getMessage());
+            throw new DAOException("BelcorpDAO: Error al obtener: " + e.getMessage());
         } finally {
             if (db != null) {
                 db.close();
@@ -137,14 +153,14 @@ public class MedicionDAO {
 
 
     public void eliminar(int id) throws DAOException {
-        Log.i("MedicionDAO", "eliminar()");
+        Log.i("BelcorpDAO", "eliminar()");
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
 
         try {
             String[] args = new String[]{String.valueOf(id)};
             db.execSQL("DELETE FROM medicion WHERE idHorno=?", args);
         } catch (Exception e) {
-            throw new DAOException("MedicionDAO: Error al eliminar: " + e.getMessage());
+            throw new DAOException("BelcorpDAO: Error al eliminar: " + e.getMessage());
         } finally {
             if (db != null) {
                 db.close();
@@ -153,13 +169,13 @@ public class MedicionDAO {
     }
 
     public void eliminarTodos() throws DAOException {
-        Log.i("MedicionDAO", "eliminarTodos()");
+        Log.i("BelcorpDAO", "eliminarTodos()");
         SQLiteDatabase db = _dbHelper.getWritableDatabase();
 
         try {
             db.execSQL("DELETE FROM medicion");
         } catch (Exception e) {
-            throw new DAOException("MedicionDAO: Error al eliminar todos: " + e.getMessage());
+            throw new DAOException("BelcorpDAO: Error al eliminar todos: " + e.getMessage());
         } finally {
             if (db != null) {
                 db.close();
